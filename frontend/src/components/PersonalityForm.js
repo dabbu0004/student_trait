@@ -46,8 +46,7 @@ const PersonalityForm = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(
-          "https://personality-trait-n8m6.onrender.com/api/personality",
+      const response = await axios.post("https://student-trait-1.onrender.com",
         {
           name: formData.name,
           subject1: Number(formData.subject1),
