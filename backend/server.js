@@ -69,8 +69,7 @@ const app = express();
 ======================= */
 app.use(
   cors({
-    origin: "https://student-trait-ln28ulwp3-dabbu0004s-projects.vercel.app/
-       ",
+    origin: "https://student-trait.vercel.app/",
     methods: ["GET", "POST"],
     credentials: true,
   })
@@ -148,5 +147,6 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 
