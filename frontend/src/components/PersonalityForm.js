@@ -66,36 +66,42 @@ const PersonalityForm = () => {
     }
   };
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100 px-4">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6 sm:p-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-center text-indigo-600 mb-6">
-          Personality Predictor
-        </h1>
+ return (
+  <div className="min-h-screen flex items-center justify-center bg-[#0f172a] bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 px-4 py-10">
+    {/* Decorative background blobs */}
+    <div className="absolute top-20 left-20 w-64 h-64 bg-purple-600/20 rounded-full blur-3xl animate-pulse"></div>
+    <div className="absolute bottom-20 right-20 w-80 h-80 bg-indigo-600/20 rounded-full blur-3xl animate-pulse delay-700"></div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Name
+    <div className="relative w-full max-w-lg backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-8 overflow-hidden">
+      <div className="relative z-10">
+        <h1 className="text-3xl sm:text-4xl font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 to-purple-400 mb-2">
+          Identity Mapper
+        </h1>
+        <p className="text-slate-400 text-center text-sm mb-8">Discover the core of your personality through your performance</p>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Name Input */}
+          <div className="group">
+            <label className="block text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2 ml-1">
+              Full Name
             </label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter your name"
+              placeholder="e.g. Alex Rivers"
               required
-              className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none transition"
+              className="w-full bg-slate-800/50 border border-slate-600 text-white p-4 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all duration-300 placeholder:text-slate-500 group-hover:border-slate-400"
             />
           </div>
 
-          {/* Subjects */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {/* Subjects Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {["subject1", "subject2", "subject3"].map((sub, i) => (
-              <div key={sub}>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
-                  Subject {i + 1}
+              <div key={sub} className="group">
+                <label className="block text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-2 ml-1 text-center sm:text-left">
+                  Score {i + 1}
                 </label>
                 <input
                   type="number"
@@ -104,70 +110,68 @@ const PersonalityForm = () => {
                   max={100}
                   value={formData[sub]}
                   onChange={handleChange}
-                  placeholder="0 - 100"
+                  placeholder="0-100"
                   required
-                  className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 transition"
+                  className="w-full bg-slate-800/50 border border-slate-600 text-white p-4 rounded-xl focus:ring-2 focus:ring-purple-500 outline-none transition-all duration-300 text-center"
                 />
               </div>
             ))}
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold
-                       hover:bg-indigo-700 active:scale-95 transition
-                       disabled:opacity-60 disabled:cursor-not-allowed"
+            className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 p-4 font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
           >
-            {loading ? "Calculating..." : "Discover My Personality Trait"}
+            <div className="absolute inset-0 bg-white/20 translate-y-full transition-transform group-hover:translate-y-0"></div>
+            <span className="relative">
+              {loading ? "Analysing Traits..." : "Reveal Personality"}
+            </span>
           </button>
         </form>
 
-        {/* Error */}
+        {/* Error State */}
         {error && (
-          <p className="mt-4 text-center text-red-500 font-medium">
-            {error}
-          </p>
+          <div className="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/50">
+            <p className="text-center text-red-400 text-sm font-medium">{error}</p>
+          </div>
         )}
 
-        {/* Result */}
+        {/* Result Area */}
         {result && (
-          <div className="mt-6 bg-indigo-50 border border-indigo-200 rounded-xl p-4 text-center">
-            <h2 className="text-lg font-semibold mb-2">
-              Hello, {result.name} 👋
-            </h2>
+          <div className="mt-8 animate-[fadeIn_0.5s_ease-out]">
+            <div className="p-[2px] rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+              <div className="bg-slate-900 rounded-[14px] p-6 text-center">
+                <h2 className="text-xl font-bold text-white mb-1">
+                  Insight for {result.name}
+                </h2>
+                <div className="flex justify-center gap-4 text-xs text-slate-400 mb-6 uppercase tracking-[0.2em]">
+                  <span>Avg: {result.average}</span>
+                  <span>Grade: {result.grade}</span>
+                </div>
 
-            <p className="text-gray-700">
-              <strong>Average:</strong> {result.average}
-            </p>
-            <p className="text-gray-700">
-              <strong>Grade:</strong> {result.grade}
-            </p>
+                <div className="relative inline-block px-8 py-3 rounded-full bg-white/5 border border-white/10 mb-4">
+                  <p className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-b from-white to-indigo-300 uppercase italic">
+                    {result.personalityTrait}
+                  </p>
+                </div>
 
-            <div className="mt-4">
-              <p className="text-sm text-gray-600">
-                Your Personality Trait
-              </p>
-              <p className="text-xl font-bold text-indigo-600">
-                {result.personalityTrait}
-              </p>
-
-              <p className="mt-2 text-gray-600 text-sm">
-                {result.personalityTrait === "Leader" &&
-                  "You are confident, ambitious, and naturally take charge."}
-                {result.personalityTrait === "Thinker" &&
-                  "You are analytical, thoughtful, and love solving problems."}
-                {result.personalityTrait === "Artist" &&
-                  "You are creative, expressive, and imaginative."}
-              </p>
+                <p className="text-slate-300 text-sm leading-relaxed px-4">
+                  {result.personalityTrait === "Leader" && "A vision-driven force of nature. You excel at turning obstacles into stepping stones for others."}
+                  {result.personalityTrait === "Thinker" && "The architect of logic. You possess the rare ability to see patterns where others see chaos."}
+                  {result.personalityTrait === "Artist" && "A weaver of imagination. You translate the intangible into beauty that resonates."}
+                </p>
+              </div>
             </div>
           </div>
         )}
       </div>
     </div>
-  );
+  </div>
+);
 };
 
 export default PersonalityForm;
+
 
