@@ -39,8 +39,9 @@ router.post('/personality', async (req, res) => {
     }
 
     const traitDoc = await TraitRange.findOne({
-      minGrade: { $lte: gradeDoc.grade },
-      maxGrade: { $gte: gradeDoc.grade }
+      // minGrade: { $lte: gradeDoc.grade },
+      // maxGrade: { $gte: gradeDoc.grade }
+       grade: gradeDoc.grade
     });
 
     if (!traitDoc) {
@@ -60,3 +61,4 @@ router.post('/personality', async (req, res) => {
 });
 
 module.exports = router;
+
